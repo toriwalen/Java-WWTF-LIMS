@@ -62,39 +62,6 @@ public class Sample
             analysisList.add(TSS);
         }
     }
-    /**
-     * Constructor for a sample being created using a string of required analysiss.
-     * TO DO: Change analysisRequirements
-     */ 
-    public Sample(int samplingDate, String samplingLocation, int sampleNumber, String sampleType, String analysisRequired){
-        this.date = samplingDate;
-        this.sampleNumber = sampleNumber;
-        this.location = samplingLocation;
-        this.assignSampleID();
-        this.type = sampleType;
-        this.addToSampleLog(type + " sample from " + location + " created");
-        analysisRequired = analysisRequired.toLowerCase();
-        if (analysisRequired.contains("bod") || analysisRequired.contains("biochemical oxygen demand")){
-            this.needsBODAnalysis = true;
-            BOD = new Analysis(this, "Bological Oxygen Demand");
-            analysisList.add(BOD);
-        }
-        if (analysisRequired.contains("fecal coliforms") || analysisRequired.contains("fecal")){
-            this.needsFecalColiformAnalysis = true;
-            fecalColiform = new Analysis(this, "Fecal Coliforms");
-            analysisList.add(fecalColiform);
-        }
-        if (analysisRequired.contains("ph")){
-            this.needspHAnalysis = true;
-            pH = new Analysis(this, "pH");
-            analysisList.add(pH);
-        }
-        if (analysisRequired.contains("tss") || analysisRequired.contains("total suspended solids")){
-            this.needsTSSAnalysis = true;
-            TSS = new TSSAnalysis(this);
-            analysisList.add(TSS);
-        }
-    }
 
     /**
      * This method prints the sample log.

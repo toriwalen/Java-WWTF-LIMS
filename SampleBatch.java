@@ -1,7 +1,4 @@
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 /**
  * This class creates batches of samples.
  *
@@ -16,25 +13,6 @@ public class SampleBatch
     public SampleBatch(){
         batchList = new ArrayList<Sample>();
         dateCreated = 20211209;
-    }
-    public SampleBatch(String configFileIn) throws FileNotFoundException {
-        File configFile = new File(configFileIn);
-        try{
-            Scanner sc = new Scanner(configFile);
-            String firstLine = sc.nextLine();
-            while(sc.hasNext()){
-                String samplingLocation = sc.next();
-                int sampleNumber = Integer.parseInt(sc.next());
-                String sampleType = sc.next();
-                String analysisRequired = sc.nextLine();
-                Sample newSample = new Sample(20211210, samplingLocation, sampleNumber, sampleType, analysisRequired);
-                addToBatch(newSample);
-                newSample.viewAnalysisList();
-            }
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
     }
 
     public void print(){
@@ -61,20 +39,4 @@ public class SampleBatch
             batchList.add(sampleIn);
         }
     }
-    public static void main(String[] args){
-        
-        try{
-        SampleBatch todaysSamples = new SampleBatch("config.txt");
-        //todaysSamples.print();
-        TSSBatch todaysTSSBatch = new TSSBatch(todaysSamples);
-        //todaysTSSBatch.startAnalysisBatch();
-        //todaysTSSBatch.completeAnalysisBatch();
-        //todaysTSSBatch.printBatchResults();
-        todaysTSSBatch.print();
-    }
-    catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-    
-            }
 }
