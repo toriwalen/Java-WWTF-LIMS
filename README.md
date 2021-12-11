@@ -1,2 +1,6 @@
 # Java-WWTF-LIMS
 This project consists of creating a laboratory information management system from the ground up. It is geared towards wastewater treatment laboratory tests and data, and is designed to assist in maintaining compliance. The functionality is based off the Standard Methods for the Examination of Water and Wastewater.
+
+The program consists of a Lab class, which represents the physical laboratory that contains the samples, where the testing is performed. SampleBatch represents a batch of Samples collected around the wastewater treatment facility. Each Sample has at least one Analysis performed on it. The Analysis class represents tests performed on the samples, so it holds the data unique to each test method outlined in the Standard Mehods. Each Analysis is part of an AnalysisBatch. An AnalysisBatch represents all Analyses of a specific type being performed on Samples. Reports may be generated for all Analyses performed on a Sample, or for each Analysis performed in an AnalysisBatch. Eventually I would like to be able to upload Reports to a database, but I'm willing to start with exporting to a txt file for now.
+
+Eventually I would like to work on data quality assurance features (perhaps a compliance check?) for blanks, QA samples, and compliance samples.
