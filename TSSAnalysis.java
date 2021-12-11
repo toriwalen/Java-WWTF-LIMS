@@ -4,7 +4,7 @@ import java.util.Scanner;
  * This analysis is for Total Suspended Solids
  *
  * @author Tori
- * @version 20211209
+ * @version 20211209.1
  */
 public class TSSAnalysis extends Analysis
 {

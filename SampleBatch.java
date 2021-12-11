@@ -3,7 +3,7 @@ import java.util.ArrayList;
  * This class creates batches of samples.
  *
  * @author Tori
- * @version 20211209
+ * @version 20211209.1
  */
 public class SampleBatch
 {

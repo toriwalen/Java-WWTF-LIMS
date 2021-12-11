@@ -3,7 +3,7 @@ import java.util.ArrayList;
  * This class creates batches of Analysis objects.
  *
  * @author Tori
- * @version 20211210
+ * @version 20211210.1
  */
 public class TSSBatch
 {
