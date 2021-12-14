@@ -8,12 +8,11 @@ import java.util.ArrayList;
 public class Analysis
 {
     protected Sample sample;
-    private String sampleID;
-    public final String analysisName;
-    public final String method = "Test Method #123";
     private String analysisID;
     private int analysisDate; //date tested
-    protected double result;
+    public final String analysisName;
+    public final String method = "Test Method #123";
+    private double result;
     private boolean analysisComplete = false;
     
     /**
@@ -21,7 +20,6 @@ public class Analysis
      */
     public Analysis(Sample sample, String analysisName)
     {
-       sampleID = sample.getSampleID();
        this.analysisName = analysisName;
        this.sample = sample;
        assignAnalysisID();
@@ -37,29 +35,35 @@ public class Analysis
     {
         sample.addToSampleLog("Initial data recorded: ");
     }
-    public void completeAnalysis(){
-        sample.addToSampleLog("Final data recorded: ");
-    }
     /**
      * This method is used for "reading" a test - recording the final data that will be used to calculate results.
      */
-    public void readAnalysis(){
-        
+    public void completeAnalysis(){
+        sample.addToSampleLog("Final data recorded: ");
     }
-    public String getSampleID(){
-        return sampleID;
+    private double calculateResult(){
+        return result;
     }
-    public String getName(){
+    public String getAnalysisID(){
+        return analysisID;
+    }
+    public int getAnalysisDate(){
+        return analysisDate;
+    }
+    public boolean isComplete(){
+        return analysisComplete;
+    }
+    public String getAnalysisName(){
         return analysisName;
     }
-    private void assignAnalysisID(){
-        this.analysisID = sampleID + analysisName;
+    public double getResult(){
+        return result;
     }
-    /*
-     * TO DO: make so that it lists old and new data
-     */
-    public void fixTypo(){
-        sample.addToSampleLog("Typo fixed. X entry was changed to X");
+    public String getMethod(){
+        return method;
+    }
+    private void assignAnalysisID(){
+        this.analysisID = "TSS" + sample.getSampleID();
     }
     public String toString(){
         String description = analysisName +" " + method;
@@ -70,5 +74,8 @@ public class Analysis
     }
     public Sample getSample(){
         return sample;
+    }
+    public void setAnalysisComplete(boolean isComplete){
+        analysisComplete = isComplete;
     }
 }

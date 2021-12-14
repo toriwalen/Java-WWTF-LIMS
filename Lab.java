@@ -1,36 +1,29 @@
 
 /**
- * Write a description of class Lab here.
+ * The lab is where all of the testing takes place.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Tori
+ * @version 20211213.1
  */
 public class Lab
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    //User
+    //
 
     /**
      * Constructor for objects of class Lab
      */
     public Lab()
     {
-        // initialise instance variables
-        x = 0;
+        
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+    /*
+     * GUI - Have a button that when clicked, runs the "go sample" method from the user class.
      */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
-    public static void main(String[] args){
+    
+    /*
+     * 
+     public static void main(String[] args){
         //int samplingDate, int sampleNumber, String samplingLocation, String sampleType, String analysissRequired
         Sample sample1 = new Sample(20211209, 1, "MBR1", "grab", "TSS");
         Sample sample2 = new Sample(20211209, 1, "permeate", "composite", " BOD, pH, fecal coliform");
@@ -56,5 +49,6 @@ public class Lab
         todaysTSSBatch.completeAnalysisBatch();
         todaysTSSBatch.printBatchResults();
         //sample2.viewAnalysisList();
+        */
+       
     }
-}

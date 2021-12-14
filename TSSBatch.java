@@ -7,8 +7,10 @@ import java.util.ArrayList;
  */
 public class TSSBatch
 {
-    protected ArrayList<TSSAnalysis> batchList= new ArrayList<TSSAnalysis>();
-    protected int dateCreated;
+    private ArrayList<TSSAnalysis> batchList= new ArrayList<TSSAnalysis>();
+    private int dateCreated;
+    private int ovenTempIn;
+    private int ovenTempOut;
     Sample blank = new Sample(20211210, 1, "blank", "blank", "Total Suspended Solids");
     Sample control = new Sample(20211210, 1, "control", "control", "Total Suspended Solids");
     //int samplingDate, int sampleNumber, String samplingLocation, String sampleType, String analysissRequired
@@ -22,16 +24,6 @@ public class TSSBatch
                 addToBatch(sample.getTSSAnalysis());
             }
         }
-    }
-    public void startAnalysisBatch(){
-      for(TSSAnalysis analysis : batchList){
-          analysis.startAnalysis();
-      }
-    }
-    public void completeAnalysisBatch(){
-        for(TSSAnalysis analysis : batchList){
-          analysis.completeAnalysis();
-      }
     }
     public void printBatchResults(){
         for(TSSAnalysis analysis : batchList){
