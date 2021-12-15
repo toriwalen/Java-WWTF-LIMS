@@ -35,6 +35,9 @@ public class Analysis
     {
         sample.addToSampleLog("Initial data recorded: ");
     }
+    public String getName(){
+        return analysisName;
+    }
     /**
      * This method is used for "reading" a test - recording the final data that will be used to calculate results.
      */

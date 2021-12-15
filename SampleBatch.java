@@ -8,52 +8,101 @@ import java.util.ArrayList;
  */
 public class SampleBatch
 {
-    protected ArrayList<Sample> batchList= new ArrayList<Sample>();
+    protected Node head;
     protected int dateCreated;
     
     /**
-     * Default constructor. Date is a placeholder for now.
+     * Default constructor with first sample in. Date is a placeholder for now.
      */
-    public SampleBatch(){
-        batchList = new ArrayList<Sample>();
+    public SampleBatch(Sample firstSample){
+        head = new Node(firstSample);
         dateCreated = 20211209;
     }
     
+    public SampleBatch(){
+        head = null;
+        System.out.println("Sample batch created");
+        dateCreated = 20211214;
+    }
     /**
      * Create a constructor for a config file. While the file has next line, create new samples from the info in the file.
      */
     public SampleBatch(String fileIn){
         
     }
+    public void insert(Sample toInsert, int position){
+        
+    }
+    public void add(Sample sampleIn){
+        Node currentNode = head;
+        if(head == null){
+            head = new Node(sampleIn);
+            System.out.println("added sample " + sampleIn.getSampleID() + " to batch");
+        }else{
+            
+                while(currentNode.hasNext()){
+                currentNode = currentNode.getNextNode();  
+            }
+                    currentNode.setNextNode(new Node(sampleIn));
+                    System.out.println("added sample " + sampleIn.getSampleID() + " to batch");
+                }
+                
+            }
+            
+        
+
+    
     
     /**
-     * Prints samples in 
+     * Prints sample IDs of samples in the batch
+     * 
+     * @param - none
+     * @return - none
      */
-    public ArrayList<Sample> print(){
-        System.out.println("Samples in batch from " + dateCreated);
-        for(Sample sample : batchList){
-            System.out.println(sample.toString());
-        }
-        return batchList;
+    public void print(){
+        Node currentNode = head;
+            while(currentNode != null){
+                Sample toPrint = (Sample)currentNode.getData();
+                System.out.println(toPrint.getSampleID());
+                currentNode = currentNode.getNextNode();
+            }
+        
     }
     
-    public ArrayList<Sample> getBatchList(){
-        return batchList;
+    public String toString(){
+        String toReturn = "";
+        Node currentNode = head;
+            while(currentNode != null){
+                Sample toPrint = (Sample)currentNode.getData();
+                toReturn += toPrint.toString() + "\n";
+                currentNode = currentNode.getNextNode();
+            }
+        return toReturn;
     }
 
-    /**
-     * Change to private later.
-     */
-    public void add(Sample sampleIn){
-        boolean addToBatch = true;
-        for(Sample sample : batchList){
-            if(sample.equals(sampleIn)){
-                addToBatch = false;
+    public Node remove(String sampleID){
+        Node currentNode = head;
+        Node previousNode = currentNode;
+        Node toRemove = null;
+        while(currentNode != null){      
+                Sample toCheck = (Sample)currentNode.getData();
+                if(toCheck.getSampleID().equals(sampleID)){
+                    if(currentNode == head){
+                        head = currentNode.getNextNode();
+                        toRemove = currentNode;
+                    } else{ 
+                    toRemove = currentNode;
+                    previousNode.setNextNode(currentNode.getNextNode());
+                    currentNode.setNextNode(null);
+                }
+                }
+                previousNode = currentNode;
+                currentNode = currentNode.getNextNode();
             }
-        }
-        if(addToBatch == true){
-            batchList.add(sampleIn);
-        }
+            return toRemove;
+            }
+    public Node getHeadNode(){
+        return head;
     }
     
 }

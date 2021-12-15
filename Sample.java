@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 /**
  * This class creates objects reflecting real life samples taken from a
- * wastewater treatment plant. 
+ * wastewater treatment plant.
  *
  * @author Tori
  * @version 20211209.1
@@ -10,14 +10,12 @@ import java.util.ArrayList;
 public class Sample
 {
     // instance variables
-    private String sampleID;//sampleID contains the date + sample location + the sample number in a string
-    private int sampleNumber; //sample numbers start at 1 and sequentially go up. Used to differentiate when several samples
-    //from the same location are taken at the same time.
-    private int date = 211213; //date stores the sampling date as an ISO formatted date
+    private String sampleID;//sampleID contains the date and sample location in a string
+    private int sampleNumber;
+    private int date; //date stores the sampling date as an ISO formatted date
     private String location; //locations are specified around the plant
-    private String collectionType; //grab or composite
-    private String liquidType; //influent, effluent, mlss - implement this based off location?
-    private String sampleType; //compliance or process control
+    private String name; //effluent, influent, mlss
+    private String type; //grab or composite
     private boolean needsBODAnalysis;
     private boolean needsFecalColiformAnalysis;
     private boolean needspHAnalysis;
@@ -32,7 +30,8 @@ public class Sample
     
 
     /**
-     * Constructor for a sample being created using a string of required analyses.
+     * Constructor for a sample being created using a string of required analysiss.
+     * I know this constructor works.
      * 
      */ 
     public Sample(int samplingDate, int sampleNumber, String samplingLocation, String sampleType, String analysisRequired){
@@ -40,8 +39,8 @@ public class Sample
         this.sampleNumber = sampleNumber;
         this.location = samplingLocation;
         this.assignSampleID();
-        this.collectionType = sampleType;
-        this.addToSampleLog(sampleType + " sample from " + location + " created");
+        this.type = sampleType;
+        this.addToSampleLog(type + " sample from " + location + " created");
         analysisRequired = analysisRequired.toLowerCase();
         if (analysisRequired.contains("bod") || analysisRequired.contains("biochemical oxygen demand")){
             this.needsBODAnalysis = true;
@@ -64,46 +63,7 @@ public class Sample
             analysisList.add(TSS);
         }
     }
-    /**
-     * Make this constructor automatically assign the date/time of the sample to be the date/time of the sample collection event
-     * How do I do that??
-     * 
-     */ 
-    public Sample(String samplingLocation, int sampleNumber, String collectionType, String sampleType, String analysisRequired){
-        this.sampleNumber = sampleNumber;
-        this.location = samplingLocation;
-        this.assignSampleID();
-        this.collectionType = sampleType;
-        this.addToSampleLog(sampleType + " sample from " + location + " created");
-        analysisRequired = analysisRequired.toLowerCase();
-        sampleType = sampleType.toLowerCase();
-        if(sampleType.equals("compliance")){
-            complianceSample = true;
-        }
-        if (analysisRequired.contains("bod") || analysisRequired.contains("biochemical oxygen demand")){
-            this.needsBODAnalysis = true;
-            BOD = new Analysis(this, "Bological Oxygen Demand");
-            analysisList.add(BOD);
-        }
-        if (analysisRequired.contains("fecal coliforms") || analysisRequired.contains("fecal")){
-            this.needsFecalColiformAnalysis = true;
-            fecalColiform = new Analysis(this, "Fecal Coliforms");
-            analysisList.add(fecalColiform);
-        }
-        if (analysisRequired.contains("ph")){
-            this.needspHAnalysis = true;
-            pH = new Analysis(this, "pH");
-            analysisList.add(pH);
-        }
-        if (analysisRequired.contains("tss") || analysisRequired.contains("total suspended solids")){
-            this.needsTSSAnalysis = true;
-            TSS = new TSSAnalysis(this);
-            analysisList.add(TSS);
-        }
-    }
-    /**
-     * Write a better toString method.
-     */
+
     /**
      * This method prints the sample log.
      */
@@ -166,7 +126,7 @@ public class Sample
         analysisRequested = analysisRequested.toLowerCase();
         boolean alreadyHasAnalysis = false;
         for(Analysis analysis: analysisList){
-            if(analysisRequested.equals(analysis.getAnalysisName().toLowerCase())){
+            if(analysisRequested.equals(analysis.getName().toLowerCase())){
                 System.out.println("Sample is already assigned analysis");  
                 alreadyHasAnalysis = true;
             }
@@ -241,19 +201,15 @@ public class Sample
 
     public boolean hasTSSAnalysis(){
         if(TSS != null){
-            for(Analysis analysis: this.analysisList){
-                if (analysis.getAnalysisName().equals("TSS")){
                     return true;
                 }
-            }
-        }
-        return false;
+            return false;
     }
 
     public boolean hasBODAnalysis(){
-        if(BOD != null){
+        if(TSS != null){
             for(Analysis analysis: this.analysisList){
-                if (analysis.getAnalysisName().equals("BOD")){
+                if (analysis.getName().equals("BOD")){
                     return true;
                 }
             }
@@ -262,9 +218,9 @@ public class Sample
     }
 
     public boolean haspHAnalysis(){
-        if(pH != null){
+        if(TSS != null){
             for(Analysis analysis: this.analysisList){
-                if (analysis.getAnalysisName().equals("pH")){
+                if (analysis.getName().equals("pH")){
                     return true;
                 }
             }
@@ -273,9 +229,9 @@ public class Sample
     }
 
     public boolean hasFecalColiformAnalysis(){
-        if(fecalColiform != null){
+        if(TSS != null){
             for(Analysis analysis: this.analysisList){
-                if (analysis.getAnalysisName().equals("Fecal coliform")){
+                if (analysis.getName().equals("Fecal coliform")){
                     return true;
                 }
             }
@@ -288,28 +244,39 @@ public class Sample
         }
         return false;
     }
-    /**
-     * MAKE THIS BETTER
-     */
     public String toString(){
-        return sampleID;
+        String toReturn = "Sample " + sampleID + " is sample number " + sampleNumber + " from " + location + ".";
+        return toReturn;
     }
-    /**
-     * MAKE THIS BETTER
-     */
     public void print(){
         System.out.println("Sample " + sampleID + " from " + location);
     }
     public void viewAnalysisList(){
         System.out.println("Tests queued for sample: " + sampleID);
         for(Analysis analysis : analysisList){
-            System.out.println(analysis.getAnalysisName());
+            System.out.println(analysis.getName());
         }
     }
-    
-    //String samplingLocation, int sampleNumber, String collectionType, String sampleType, String analysisRequired
     public static void main(String[] args){
-        Sample sample1 = new Sample("MBR1", 1, "grab", "process control", "TSS");
-        sample1.print();
+        Sample sample1 = new Sample(211214, 1, "MBR1", "grab", "TSS");
+        Sample sample2 = new Sample(211214, 1, "pl-inf", "composite", "tss, bod");
+        Sample sample3 = new Sample(324534, 1, "pl-eff", "composite", "TSS, bod");
+        Sample sample4 = new Sample(211214, 2, "pl-inf", "composite", "tss, bod");
+        Sample sample5 = new Sample(324534, 1, "pl-eff", "composite", " bod");
+        //sample1.print();
+        //sample2.viewAnalysisList();
+        SampleBatch todaysSamples = new SampleBatch();
+        todaysSamples.add(sample1);
+        todaysSamples.add(sample2);
+        todaysSamples.add(sample3);
+        todaysSamples.add(sample4);
+        todaysSamples.add(sample5);
+        System.out.println(todaysSamples.toString());
+        TSSBatch todaysTSS = new TSSBatch(todaysSamples);
+        todaysTSS.print();
+        todaysTSS.startBatch();
+        todaysTSS.completeBatch();
+        todaysTSS.printBatchResults();
+        
     }
         }
