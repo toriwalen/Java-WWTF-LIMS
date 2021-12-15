@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 /**
  * A sample batch is considered to be all samples taken during one sampling "event" - a period of time where samples are 
  * taken in quick succession from multiple locations around the plant. 
@@ -27,7 +31,26 @@ public class SampleBatch
     /**
      * Create a constructor for a config file. While the file has next line, create new samples from the info in the file.
      */
-    public SampleBatch(String fileIn){
+    public SampleBatch(String fileName){
+        
+        try {
+            File fileIn = new File(fileName);
+            Scanner sc = new Scanner(fileIn);
+            String firstLine = sc.nextLine();
+            while(sc.hasNext()){
+                String samplingLocation = sc.next();
+                int sampleNumber = Integer.parseInt(sc.next());
+                String sampleType = sc.next();
+                String analysisRequired = sc.nextLine();
+                Sample newSample = new Sample(samplingLocation, sampleNumber, sampleType, analysisRequired);
+                add(newSample);
+                newSample.viewAnalysisList();
+            }
+        }
+            catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        
         
     }
     public void insert(Sample toInsert, int position){
