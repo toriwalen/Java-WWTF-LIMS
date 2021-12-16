@@ -14,7 +14,7 @@ public class SampleBatch
 {
     protected Node head;
     protected int dateCreated;
-    
+
     /**
      * Default constructor with first sample in. Date is a placeholder for now.
      */
@@ -22,17 +22,18 @@ public class SampleBatch
         head = new Node(firstSample);
         dateCreated = 20211209;
     }
-    
+
     public SampleBatch(){
         head = null;
         System.out.println("Sample batch created");
         dateCreated = 20211214;
     }
+
     /**
      * Create a constructor for a config file. While the file has next line, create new samples from the info in the file.
      */
     public SampleBatch(String fileName){
-        
+
         try {
             File fileIn = new File(fileName);
             Scanner sc = new Scanner(fileIn);
@@ -47,14 +48,12 @@ public class SampleBatch
                 newSample.viewAnalysisList();
             }
         }
-            catch (FileNotFoundException e){
+        catch (FileNotFoundException e){
             e.printStackTrace();
         }
-        
-        
+
     }
     public void insert(Sample toInsert, int position){
-        
     }
     public void add(Sample sampleIn){
         Node currentNode = head;
@@ -62,19 +61,17 @@ public class SampleBatch
             head = new Node(sampleIn);
             System.out.println("added sample " + sampleIn.getSampleID() + " to batch");
         }else{
-            
-                while(currentNode.hasNext()){
+
+            while(currentNode.hasNext()){
                 currentNode = currentNode.getNextNode();  
             }
-                    currentNode.setNextNode(new Node(sampleIn));
-                    System.out.println("added sample " + sampleIn.getSampleID() + " to batch");
-                }
-                
-            }
-            
-        
+            currentNode.setNextNode(new Node(sampleIn));
+            System.out.println("added sample " + sampleIn.getSampleID() + " to batch");
+        }
 
-    
+    }
+
+
     
     /**
      * Prints sample IDs of samples in the batch
@@ -84,22 +81,22 @@ public class SampleBatch
      */
     public void print(){
         Node currentNode = head;
-            while(currentNode != null){
-                Sample toPrint = (Sample)currentNode.getData();
-                System.out.println(toPrint.getSampleID());
-                currentNode = currentNode.getNextNode();
-            }
-        
+        while(currentNode != null){
+            Sample toPrint = (Sample)currentNode.getData();
+            System.out.println(toPrint.getSampleID());
+            currentNode = currentNode.getNextNode();
+        }
+
     }
-    
+
     public String toString(){
         String toReturn = "";
         Node currentNode = head;
-            while(currentNode != null){
-                Sample toPrint = (Sample)currentNode.getData();
-                toReturn += toPrint.toString() + "\n";
-                currentNode = currentNode.getNextNode();
-            }
+        while(currentNode != null){
+            Sample toPrint = (Sample)currentNode.getData();
+            toReturn += toPrint.toString() + "\n";
+            currentNode = currentNode.getNextNode();
+        }
         return toReturn;
     }
 
@@ -108,24 +105,25 @@ public class SampleBatch
         Node previousNode = currentNode;
         Node toRemove = null;
         while(currentNode != null){      
-                Sample toCheck = (Sample)currentNode.getData();
-                if(toCheck.getSampleID().equals(sampleID)){
-                    if(currentNode == head){
-                        head = currentNode.getNextNode();
-                        toRemove = currentNode;
-                    } else{ 
+            Sample toCheck = (Sample)currentNode.getData();
+            if(toCheck.getSampleID().equals(sampleID)){
+                if(currentNode == head){
+                    head = currentNode.getNextNode();
+                    toRemove = currentNode;
+                } else{ 
                     toRemove = currentNode;
                     previousNode.setNextNode(currentNode.getNextNode());
                     currentNode.setNextNode(null);
                 }
-                }
-                previousNode = currentNode;
-                currentNode = currentNode.getNextNode();
             }
-            return toRemove;
-            }
+            previousNode = currentNode;
+            currentNode = currentNode.getNextNode();
+        }
+        return toRemove;
+    }
+
     public Node getHeadNode(){
         return head;
     }
-    
+
 }

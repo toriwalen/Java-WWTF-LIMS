@@ -1,6 +1,9 @@
 
-
+import java.util.Scanner;
 import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * This class creates batches of Analysis objects.
  *
@@ -42,6 +45,13 @@ public class TSSBatch
         }
     
     }
+    /**
+     * Add a TSSAnalysis to the end of the batch. 
+     * WHERE DOES getAnalysisID() LIVE>!??!?!?!
+     * 
+     * @param - requires a TSSAnalysis to be passed in.
+     * @return - none
+     */
     public void add(TSSAnalysis analysisIn){
         Node currentNode = head;
         if(head == null){
@@ -56,32 +66,122 @@ public class TSSBatch
                     System.out.println("added analysis " + analysisIn.getAnalysisID() + " to TSS batch");
                 }
     }
+    /**
+     * Print results from this batch of analyses.
+     * 
+     * @param - none
+     * @return - none
+     */
     public void printBatchResults(){
         Node currentNode = head;
-        System.out.println("Results for this batch of TSS samples");
+        BigDecimal bigDecimal;
+        System.out.println("Results for this batch of TSS analyses");
         while(currentNode != null){
             TSSAnalysis toPrint = (TSSAnalysis)currentNode.getData();
             double result = toPrint.getResult();
-            System.out.println("Sample " + toPrint.getSample().getSampleID() + " TSS result is " + result + " mg/L");
+            bigDecimal = new BigDecimal(result);
+            bigDecimal = bigDecimal.setScale(0, RoundingMode.HALF_UP);
+            System.out.println("Sample " + toPrint.getSample().getSampleID() + " TSS result is " + bigDecimal.doubleValue() + " mg/L");
             currentNode = currentNode.getNextNode();
         }
     }
-    public void startBatch(){
+    /**
+     * Uses scanner
+     * Record only the tareWeights for the whole batch of analyses.
+     * 
+     * @param - none
+     * @return - none
+     */
+    private void recordTareWeights(){
         Node currentNode = head;
+        Scanner scannerIn = new Scanner(System.in);
         while(currentNode != null){
             TSSAnalysis toStart = (TSSAnalysis)currentNode.getData();
-            toStart.startAnalysis();
+            System.out.println("Tare weight for sample " + toStart.getSample().getLocation() + "-" + toStart.getSample().getSampleNumber());
+            toStart.setTareWeight(scannerIn.nextDouble());
             currentNode = currentNode.getNextNode();
         }
     }
-    public void completeBatch(){
+    /**
+     * Uses Scanner
+     * Record only the sampleVolumes for the whole batch of analyses.
+     * 
+     * @param - none
+     * @return - none
+     */
+    private void recordSampleVolumes(){
         Node currentNode = head;
+        Scanner scannerIn = new Scanner(System.in);
         while(currentNode != null){
-            TSSAnalysis toComplete = (TSSAnalysis)currentNode.getData();
-            toComplete.completeAnalysis();
+            TSSAnalysis toStart = (TSSAnalysis)currentNode.getData();
+            System.out.println("Sample volume for sample " + toStart.getSample().getLocation() + "-" + toStart.getSample().getSampleNumber());
+            toStart.setSampleVolume(scannerIn.nextDouble());
             currentNode = currentNode.getNextNode();
         }
     }
+    /**
+     * Uses Scanner
+     *Record only the dryWeights for the whole batch of analyses.
+     * 
+     * @param - none
+     * @return - none
+     */
+    private void recordDryWeights(){
+        Node currentNode = head;
+        Scanner scannerIn = new Scanner(System.in);
+        while(currentNode != null){
+            TSSAnalysis toStart = (TSSAnalysis)currentNode.getData();
+            System.out.println("Dry weight for sample " + toStart.getSample().getLocation() + "-" + toStart.getSample().getSampleNumber());
+            toStart.setDryWeight(scannerIn.nextDouble());
+            currentNode = currentNode.getNextNode();
+        }
+    }
+    
+    /**
+     * Iterates through the analyses in the batch and calls the calculateResult() method for each one. 
+     * @param - none
+     * @return - none
+     */
+    private void calculateBatchResults(){
+        Node currentNode = head;
+        Scanner scannerIn = new Scanner(System.in);
+        while(currentNode != null){
+            TSSAnalysis toStart = (TSSAnalysis)currentNode.getData();
+            toStart.calculateResult();
+            currentNode = currentNode.getNextNode();
+        }
+    }
+    
+    /**
+     * Initializes analysis of the batch. First the user records all of the tareWeights for the analyses.
+     * Then they record all of the sample volumes.
+     * 
+     * @param - none
+     * @return - none
+     */
+    public void startBatch(){
+        recordTareWeights();
+        recordSampleVolumes();
+    }
+    
+    /**
+     * Completes analysis of the batch - User records all of the dry weights and results are automatically calculated.
+     * 
+     * @param - none
+     * @return - none
+     */
+    public void completeBatch(){
+        recordDryWeights();
+        calculateBatchResults();
+    }
+    
+    /**
+     * Prints a list of analysis IDs 
+     * Where does getAnalysisID come from?? Analysis?? probably.
+     * 
+     * @param - none
+     * @return - none
+     */
     public void print(){
         Node currentNode = head;
         System.out.println("analysis IDs for this batch");
@@ -93,28 +193,17 @@ public class TSSBatch
                 currentNode = currentNode.getNextNode();
             }
     }
+    
+    /**
+     * I'm not really sure when I would use this to be honest. Maybe in a situation where the TSS batch was not explicitly
+     * initialized by me and theres no other way to access it??
+     * 
+     * @param - none
+     * @return - this TSSBatch
+     */
     public TSSBatch getBatch(){
         return this;
     }
-    
-/*
- * 
-
-     public static void main(String args[]){
-        
-        //String samplingLocation, int sampleNumber, String collectionType, String sampleType, String analysisRequired
-        Sample sample1 = new Sample(211214, 1, "MBR1", "grab", "TSS");
-        Sample sample2 = new Sample(211214, 1, "PL-EFF", "composite", "TSS, BOD, ph, fecal coliform");
-        Sample sample3 = new Sample(211214, 1, "PL-INF","composite",  "BOD, TSS");
-        
-        SampleBatch todaysSamples = new SampleBatch();
-        todaysSamples.add(sample1);
-        todaysSamples.add(sample3);
-        todaysSamples.add(sample2);
-        System.out.println(sample1.getTSSAnalysis().toString());
-        TSSBatch todaysTSS = new TSSBatch(todaysSamples);
-        //todaysTSS.print();
-    } */
     
 }
 

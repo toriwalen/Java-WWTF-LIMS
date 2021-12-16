@@ -44,6 +44,9 @@ public class User
     /**
      * Eventually I would like to make this method work with drop down menus to choose samples, and check boxes for
      * the tests. The tests can be preassigned according to the config file. 
+     * 
+     * @param - none
+     * @return - returns a SampleBatch
      */
     public SampleBatch chooseSamples(){
         SampleBatch todaysSamples = new SampleBatch();
@@ -56,9 +59,16 @@ public class User
      * @return - returns a SampleBatch with Samples created for each line of the config file. Samples then instantiate Analyses.
      */
     public SampleBatch chooseSamples(String fileIn){
-        SampleBatch todaysSamples = new SampleBatch();
+        SampleBatch todaysSamples = new SampleBatch(fileIn);
         return todaysSamples;
     }
+    /**
+     * Creates an AnalysisBatch
+     * I honestly don't really know where I was going with this - I think I was going to make it so that
+     * when there are two separate SampleBatches you can create an analysis batch from both.
+     * @param
+     * @return - batch
+     */
     public Batch createAnalysisBatch(){
         // choose the analysis using buttons or something
         // creates new instance of the AnalysisBatch. 
@@ -67,17 +77,21 @@ public class User
         return null;
     }
     /**
-     * 
-     * @param 
-     * @return
+     * In the UI when the user clicks the "set test" button
+     * this method will initiate the "analyzeBatch()" method from the passed in AnalysisBatch class.
+     * @param - AnalysisBatch to be analyzed
+     * @return - none
      */
     public void startAnalysis(Batch toAnalyze){
-       // for each analysis in the batch toAnalyze,
-       //run the startAnalysis method from the analysis class.
+       
         }
+       
+        /**
+         * User will call this method in the UI, and this method will initate the completeAnalysisBatch() method
+         * from the passed in AnalysisBatch class.
+         */
     public void completeAnalysis(Batch toAnalyze){
-        // for each analysis in the batch toAnalyze,
-       //run the completeAnalysis method from the analysis class
+        
     }
     
     }

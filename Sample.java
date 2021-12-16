@@ -291,31 +291,34 @@ public class Sample
         }
     }
     public static void main(String[] args){
-       /*
-        * 
+       
         Sample sample1 = new Sample(211214, 1, "MBR1", "grab", "TSS");
-        Sample sample2 = new Sample(211214, 1, "pl-inf", "composite", "tss, bod");
-        Sample sample3 = new Sample(324534, 1, "pl-eff", "composite", "TSS, bod");
-        Sample sample4 = new Sample(211214, 2, "pl-inf", "composite", "tss, bod");
-        Sample sample5 = new Sample(324534, 1, "pl-eff", "composite", " bod");
+        //Sample sample2 = new Sample(211214, 1, "pl-inf", "composite", "tss, bod");
+        //Sample sample3 = new Sample(324534, 1, "pl-eff", "composite", "TSS, bod");
+        //Sample sample4 = new Sample(211214, 2, "pl-inf", "composite", "tss, bod");
+        //Sample sample5 = new Sample(324534, 1, "pl-eff", "composite", " bod");
         //sample1.print();
         //sample2.viewAnalysisList();
-        SampleBatch todaysSamples = new SampleBatch();
-        todaysSamples.add(sample1);
-        todaysSamples.add(sample2);
-        todaysSamples.add(sample3);
-        todaysSamples.add(sample4);
-        todaysSamples.add(sample5);
-        System.out.println(todaysSamples.toString());
-        TSSBatch todaysTSS = new TSSBatch(todaysSamples);
-        todaysTSS.print();
-        todaysTSS.startBatch();
-        todaysTSS.completeBatch();
-        todaysTSS.printBatchResults();
-         */
+        //SampleBatch todaysSamples = new SampleBatch();
+        //todaysSamples.add(sample1);
+        //todaysSamples.add(sample2);
+        //todaysSamples.add(sample3);
+        //todaysSamples.add(sample4);
+        //todaysSamples.add(sample5);
+        //System.out.println(todaysSamples.toString());
+        //TSSBatch todaysTSS = new TSSBatch(todaysSamples);
+        //todaysTSS.print();
+        //todaysTSS.startBatch();
+        //todaysTSS.completeBatch();
+        //todaysTSS.printBatchResults();
+        // TSSAnalysis sample1TSS = sample1.getTSSAnalysis();
+        // sample1TSS.startAnalysis();
+        // sample1TSS.completeAnalysis();
+         //System.out.println(sample1TSS.getResult());
         SampleBatch todaysSamples = new SampleBatch("config.txt");
-        
+        //todaysSamples.print();
         TSSBatch todaysTSSBatch = new TSSBatch(todaysSamples);
+        //todaysTSSBatch.print();
         todaysTSSBatch.startBatch();
         todaysTSSBatch.completeBatch();
         todaysTSSBatch.printBatchResults();

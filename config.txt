@@ -1,11 +1,11 @@
-Location	Sample number	Type (composite or grab)	Tests required (pH, Fecal coliforms, TSS, or BOD)
+Location    Sample number    Type (composite or grab)    Tests required (pH, Fecal coliforms, TSS, or BOD)
+Effluent 1 composite ph,tss,fecal,bod
+Effluent 2 composite ph,tss,fecal,bod
+Effluent 3 composite bod
 Influent 1 composite tss,bod
 Influent 2 composite bod
 Influent 3 composite bod
 Influent 4 composite bod
-Effluent 1 composite ph,tss,fecal,bod
-Effluent 2 composite ph,tss,fecal,bod
-Effluent 3 composite bod
 ATC1 1 grab tss
 ATC2 1 grab tss
 MBR1 1 grab tss
